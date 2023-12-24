@@ -103,8 +103,8 @@ public class PlayerController : MonoBehaviour
 
         myRigid.MoveRotation(myRigid.rotation * Quaternion.Euler(_characterRotationY));//유니티는 회전을 사원수 기반으로 계산한다. Vector3을 이용하기 위해서는 Euler를 쿼터니언으로 변환할 필요가 있다.
 
-        Debug.Log(myRigid.rotation);//사원수
-        Debug.Log(myRigid.rotation.eulerAngles);//오일러 각
+        //Debug.Log(myRigid.rotation);//사원수
+       // Debug.Log(myRigid.rotation.eulerAngles);//오일러 각
     }
 
     private void TryRun()
