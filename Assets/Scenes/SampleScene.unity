@@ -895,7 +895,7 @@ MonoBehaviour:
   gunName: SubMachineGun1
   range: 100
   accuracy: 0.04
-  fireRate: 0.05
+  fireRate: 0.005
   reloadTime: 2
   damage: 30
   reloadBullet: 30
@@ -6082,6 +6082,7 @@ GameObject:
   - component: {fileID: 761206404}
   - component: {fileID: 761206405}
   - component: {fileID: 761206406}
+  - component: {fileID: 761206407}
   m_Layer: 2
   m_Name: Holder
   m_TagString: Untagged
@@ -6252,6 +6253,22 @@ MonoBehaviour:
   currentWeaponType: GUN
   gunController: {fileID: 761206404}
   handController: {fileID: 761206403}
+--- !u!114 &761206407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761206401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d7b5da49a23fb4eab4b18395b8c170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  limitPos: {x: 0.2, y: 0.1, z: 0}
+  fineSightLimitPos: {x: 0.01, y: 0.01, z: 0}
+  smoothSway: {x: 0.05, y: 0.03, z: 0}
+  gunController: {fileID: 761206404}
 --- !u!1001 &885264160
 PrefabInstance:
   m_ObjectHideFlags: 0
