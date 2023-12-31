@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
     {
         isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y+0.1f);//현재 위치에서 Vector down(무조건 아래) 방향으로 캡슐콜라이더의 y 크기만큼 레이저를 발사
         //무언가에 닿으면(바닥에 닿아 있으면) true -> 그런데 경사면에 있으면 어떡하죠? 약간의 여유를 준다.(0.1f)
-        crosshair.RunningAnimation(!isGround);
+        crosshair.JumpAnimation(!isGround);
     }
     private void TryCrouch()
     {

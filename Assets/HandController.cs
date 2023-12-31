@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HandController : MonoBehaviour
 {
+
+    public static bool isActivate = false;//활성화 여부
     //현재 장착 Hand 타입 무기
     [SerializeField]
     Hand currentHand;
@@ -17,7 +19,10 @@ public class HandController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TryAttack();
+        if (isActivate)
+        {
+            TryAttack();
+        }
     }
 
     private void TryAttack()
@@ -65,5 +70,21 @@ public class HandController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void HandChange(Hand hand)
+    {
+        if (WeaponManager.currentWeapon != null)
+        {
+            WeaponManager.currentWeapon.gameObject.SetActive(false);//기존에 장착한 무기를 비활성화
+        }
+        currentHand = hand;//무기 변경
+        WeaponManager.currentWeapon = currentHand.GetComponent<Transform>();//현재 무기의 transform을 지정
+        WeaponManager.currentWeaponAnimator = currentHand.anim;//애니메이션 가져오기
+
+        currentHand.transform.localPosition = Vector3.zero;//손  위치 초기화
+        currentHand.gameObject.SetActive(true);//무기 활성화
+        isActivate = true;
+
     }
 }
