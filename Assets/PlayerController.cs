@@ -17,9 +17,13 @@ public class PlayerController : MonoBehaviour
     private float jumpForce;
 
     //상태 변수
+    private bool isWalk = false;
     private bool isRun = false;
     private bool isGround = true;
     private bool isCrouch = false;
+
+    //이동 확인 변수
+    private Vector3 lastPos;//이전 프레임 플레이어 위치
 
     //앉았을 때 높이
     [SerializeField]
@@ -43,6 +47,7 @@ public class PlayerController : MonoBehaviour
     //[SerializeField]//만약 이 필드를 사용하면 직접 Rigidbody를 지정할 수 있다.
     private Rigidbody myRigid;
     private GunController gunController;
+    private Crosshair crosshair;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +58,7 @@ public class PlayerController : MonoBehaviour
         originPosY = theCamera.transform.localPosition.y; // 카메라의 로컬 위치를 이용.(플레이어가 땅에 박히면 안되므로 카메라의 위치를 바꿔 앉기를 구현한다.
         applyCrouchPosY = originPosY;
         gunController = FindObjectOfType<GunController>();//GunController 탐색
+        crosshair= FindObjectOfType<Crosshair>();
         
     }
 
@@ -64,6 +70,7 @@ public class PlayerController : MonoBehaviour
         TryRun();
         TryCrouch();
         Move();
+        MoveCheck2();
         CameraRotation();
         CharacterRotation();
     }
@@ -95,6 +102,38 @@ public class PlayerController : MonoBehaviour
         myRigid.MovePosition(transform.position + _velocity * Time.deltaTime);
     }
 
+    private void MoveCheck2()//이동 시 크로스헤어가 흔들리는 현상을 방지(입력을 통해 예방)
+    {
+        if (!isRun && !isCrouch && isGround)
+        {
+            if((Input.GetAxisRaw("Horizontal")!=0) || (Input.GetAxisRaw("Vertical") != 0))
+            {
+                isWalk = true;
+            }
+            else
+            {
+                isWalk = false;
+            }
+            crosshair.WalkingAnimation(isWalk);
+        }
+    }
+    private void MoveCheck()
+    {
+        if (!isRun&& !isCrouch && isGround)//달리고,앉고 있지 않을 때 확인
+        {
+            if (Vector3.Distance(lastPos,transform.position)>=0.0001f)//이전 위치와 현재 위치가 다르면(거리가 0.01보다 크면)
+            {
+                isWalk = true;
+            }
+            else
+            {
+                isWalk = false;
+            }
+            crosshair.WalkingAnimation(isWalk);
+            lastPos = transform.position;//위치 업데이트
+        }
+        
+    }
     private void CharacterRotation()
     {
         //캐릭터는 좌우로 움직인다. (Mouse X에 의존)
@@ -130,12 +169,14 @@ public class PlayerController : MonoBehaviour
         gunController.CancelFineSight();
         isRun = true;
         applySpeed = runSpeed;
+        crosshair.RunningAnimation(isRun);
     }
 
     private void RunningCancle()
     {
         isRun = false;
         applySpeed = walkSpeed;
+        crosshair.RunningAnimation(isRun);
     }
     private void TryJump()
     {
@@ -156,6 +197,7 @@ public class PlayerController : MonoBehaviour
     {
         isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y+0.1f);//현재 위치에서 Vector down(무조건 아래) 방향으로 캡슐콜라이더의 y 크기만큼 레이저를 발사
         //무언가에 닿으면(바닥에 닿아 있으면) true -> 그런데 경사면에 있으면 어떡하죠? 약간의 여유를 준다.(0.1f)
+        crosshair.RunningAnimation(!isGround);
     }
     private void TryCrouch()
     {
@@ -177,7 +219,7 @@ public class PlayerController : MonoBehaviour
             applySpeed = walkSpeed;
             applyCrouchPosY = originPosY;
         }
-
+        crosshair.CrouchingAniation(isCrouch);
         //theCamera.transform.localPosition = new Vector3(theCamera.transform.localPosition.x, applyCrouchPosY, theCamera.transform.localPosition.z);//카메라 위치를 수정
         StartCoroutine(CrouchCoroutine());
     }

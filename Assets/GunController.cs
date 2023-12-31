@@ -8,6 +8,13 @@ public class GunController : MonoBehaviour
     private Gun currentGun;
     [SerializeField]
     private Vector3 OriginPos;//원래 위치
+    private Crosshair crosshair;
+    [SerializeField]
+    private Camera cam;
+    [SerializeField]
+    private GameObject hit_effect_prefab;
+
+    private RaycastHit hitinfo;
 
     private float currentFireRate;//발사 쿨다운 타이머. currentGun의 FireRate를 이용해 계산
 
@@ -19,6 +26,7 @@ public class GunController : MonoBehaviour
 
     private void Start()
     {
+        crosshair=FindObjectOfType<Crosshair>();
         audioSource = GetComponent<AudioSource>();
         //OriginPos = transform.localPosition;
     }
@@ -50,9 +58,6 @@ public class GunController : MonoBehaviour
     {
         if (!isReload)
         {
-            {
-
-            }
             if (currentGun.currentBulletCount > 0)
             {
                 Shoot();//총알 발사
@@ -65,8 +70,19 @@ public class GunController : MonoBehaviour
         }
     }
 
+    private void Hit()
+    {
+        if(Physics.Raycast(cam.transform.position,cam.transform.forward+new Vector3(Random.Range(-crosshair.GetAccuracy()-currentGun.accuracy,+crosshair.GetAccuracy()+currentGun.accuracy), Random.Range(-crosshair.GetAccuracy() - currentGun.accuracy, +crosshair.GetAccuracy() + currentGun.accuracy),0),out hitinfo, currentGun.range))
+        {
+            GameObject clone = Instantiate(hit_effect_prefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+            Destroy(clone, 2f);
+        }
+    }
+
     void Shoot()//발사 후
     {
+        Hit();
+        crosshair.FIreAnimation();
         currentGun.currentBulletCount--;
         playSE(currentGun.FireSound);
         currentGun.muzzleFlash.Play();//이펙트 재생
@@ -151,6 +167,7 @@ public class GunController : MonoBehaviour
     {
         isFineSightMod = !isFineSightMod;
         currentGun.anim.SetBool("FineSight", isFineSightMod);
+        crosshair.FineSightAnimation(isFineSightMod);
 
         if (isFineSightMod)
         {
@@ -238,5 +255,10 @@ public class GunController : MonoBehaviour
     public Gun GetGun() //private 멤버 Gun 반환
     {
         return currentGun;
+    }
+
+    public bool GetFineSightMode()
+    {
+        return isFineSightMod;
     }
 }
