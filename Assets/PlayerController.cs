@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private Camera theCamera;//Camera를 직접 지정.
     //[SerializeField]//만약 이 필드를 사용하면 직접 Rigidbody를 지정할 수 있다.
     private Rigidbody myRigid;
+    private GunController gunController;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
         applySpeed = walkSpeed;
         originPosY = theCamera.transform.localPosition.y; // 카메라의 로컬 위치를 이용.(플레이어가 땅에 박히면 안되므로 카메라의 위치를 바꿔 앉기를 구현한다.
         applyCrouchPosY = originPosY;
+        gunController = FindObjectOfType<GunController>();//GunController 탐색
         
     }
 
@@ -124,6 +126,8 @@ public class PlayerController : MonoBehaviour
         {
             Crouch();//달릴 때 앉아있으면 자동으로 앉은 상태를 해제한다.
         }
+
+        gunController.CancelFineSight();
         isRun = true;
         applySpeed = runSpeed;
     }
