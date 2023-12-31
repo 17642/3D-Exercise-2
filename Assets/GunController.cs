@@ -234,4 +234,9 @@ public class GunController : MonoBehaviour
             FineSight();
         }
     }
+
+    public Gun GetGun() //private ¸â¹ö Gun ¹ÝÈ¯
+    {
+        return currentGun;
+    }
 }
