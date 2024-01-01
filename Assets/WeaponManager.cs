@@ -17,11 +17,17 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     private Gun[] guns;
     [SerializeField]
-    private Hand[] hands;
+    private CloseWeapon[] hands;
+    [SerializeField]
+    private CloseWeapon[] axes;
+    [SerializeField]
+    private CloseWeapon[] pickaxes;
 
     //무기 딕셔너리
     private Dictionary<string,Gun> gunDictionary = new Dictionary<string,Gun>();
-    private Dictionary<string,Hand> handDictionary = new Dictionary<string,Hand>();
+    private Dictionary<string, CloseWeapon> handDictionary = new Dictionary<string,CloseWeapon>();
+    private Dictionary<string, CloseWeapon> axeDictionary = new Dictionary<string, CloseWeapon>();
+    private Dictionary<string, CloseWeapon> pickaxeDictionary = new Dictionary<string, CloseWeapon>();
 
     [SerializeField]
     private string currentWeaponType;//현재 무기 타입
@@ -33,6 +39,10 @@ public class WeaponManager : MonoBehaviour
     private GunController gunController;
     [SerializeField]
     private HandController handController;
+    [SerializeField]
+    private AxeController axeController;
+    [SerializeField]
+    private PickaxeController pickaxeController;
     // Start is called before the first frame update
     //[SerializeField]
     private void Start()
@@ -44,7 +54,15 @@ public class WeaponManager : MonoBehaviour
         }
         for(int i=0; i < hands.Length; i++)
         {
-            handDictionary.Add(hands[i].handName, hands[i]);
+            handDictionary.Add(hands[i].closeWeaponName, hands[i]);
+        }
+        for (int i = 0; i < axes.Length; i++)
+        {
+            axeDictionary.Add(axes[i].closeWeaponName, axes[i]);
+        }
+        for (int i = 0; i < axes.Length; i++)
+        {
+            pickaxeDictionary.Add(pickaxes[i].closeWeaponName, pickaxes[i]);
         }
     }
 
@@ -60,10 +78,17 @@ public class WeaponManager : MonoBehaviour
             }else if (Input.GetKeyDown(KeyCode.Alpha2))
             {//총
                 StartCoroutine(ChangeWeaponCoroutine("GUN", "SubMachineGun1"));
+            }else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                StartCoroutine(ChangeWeaponCoroutine("AXE", "Axe"));
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                StartCoroutine(ChangeWeaponCoroutine("PICKAXE", "Pickaxe"));
             }
         }
     }
-    public IEnumerator ChangeWeaponCoroutine(string type, string name)//무기 타입 -> 바꿀 무기 이름
+    public IEnumerator ChangeWeaponCoroutine(string type, string name)//무기 타입 , 바꿀 무기 이름
     {
             isChangeWeapon = true;
             currentWeaponAnimator.SetTrigger("WeaponOut");
@@ -90,6 +115,12 @@ public class WeaponManager : MonoBehaviour
                 case "HAND":
                 HandController.isActivate = false;
                     break;
+            case "AXE":
+                AxeController.isActivate = false;
+                break;
+            case "PICKAXE":
+                PickaxeController.isActivate = false;
+                break;
             }
         }
     void WeaponChange(string _type, string _name)
@@ -98,9 +129,17 @@ public class WeaponManager : MonoBehaviour
         {
             gunController.GunChange(gunDictionary[_name]);
         }
-        else if (_type == "HAND") 
+        else if (_type == "HAND")
         {
-            handController.HandChange(handDictionary[_name]);
+            handController.CloseWeaponChange(handDictionary[_name]);
+        }
+        else if (_type == "AXE")
+        {
+            axeController.CloseWeaponChange(axeDictionary[_name]);
+        }
+        else if(_type == "PICKAXE")
+        {
+            pickaxeController.CloseWeaponChange(pickaxeDictionary[_name]);
         }
     }
 }

@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class HandController : CloseWeaponController
+public class PickaxeController : CloseWeaponController
 {
     public static bool isActivate = false;//활성화 여부
     protected void Update()
@@ -12,7 +14,7 @@ public class HandController : CloseWeaponController
             TryAttack();
         }
     }
-    protected override IEnumerator HitCoroutine()
+    protected override IEnumerator HitCoroutine() // Override 함수
     {
         while (isSwing)
         {
