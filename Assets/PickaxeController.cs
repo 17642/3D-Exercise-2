@@ -20,6 +20,10 @@ public class PickaxeController : CloseWeaponController
         {
             if (CheckObject())
             {
+                if(hitInfo.transform.tag == "Rock")//바위와 닿았을 경우
+                {
+                    hitInfo.transform.GetComponent<Rock>().Mining();//Rock 스크립트 가져와서 함수 실행
+                }
                 isSwing = false;
                 Debug.Log(hitInfo.transform.name);
             }
