@@ -16,6 +16,10 @@ public class Rock : MonoBehaviour
     private GameObject go_rock;//일반 바위
     [SerializeField]
     private GameObject go_debris;//깨진 바위
+    [SerializeField]
+    private GameObject go_rockItemPrefab;//아이템 프리팹
+    [SerializeField]
+    private int count;//아이템 등장 수
 
     [SerializeField]
     private GameObject go_effect_prefabs;//이펙트 프리팹
@@ -54,6 +58,10 @@ public class Rock : MonoBehaviour
         //audioSource.Play();
         SoundManager.instance.PlaySE(destroy_sound);
         coll.enabled = false;//콜라이더 비활성화
+        for(int i = 0; i < count; i++)
+        {
+            Instantiate(go_rockItemPrefab, go_rock.transform.position, Quaternion.identity);
+        }
         Destroy(go_rock);//일반 바위 파괴
         go_debris.SetActive(true);//파편 활성화
         Destroy(go_debris, delayTime);//일정 시간 후 파편 삭제
