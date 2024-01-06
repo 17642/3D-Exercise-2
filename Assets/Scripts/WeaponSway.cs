@@ -44,7 +44,7 @@ public class WeaponSway : MonoBehaviour
         float _moveY = Input.GetAxisRaw("Mouse Y");
         if (!gunController.GetFineSightMode())//정조준 여부 확인
         {//마우스 이동 대입
-            currentPos.Set(Mathf.Clamp(Mathf.Lerp(currentPos.x, -_moveX, smoothSway.x), -limitPos.x, limitPos.x), Mathf.Clamp(Mathf.Lerp(currentPos.y, -_moveY, smoothSway.x), -limitPos.y, limitPos.y), originPos.z);
+            currentPos.Set(Mathf.Clamp(Mathf.Lerp(currentPos.x, -_moveX, smoothSway.x), -limitPos.x, limitPos.x), Mathf.Clamp(Mathf.Lerp(currentPos.y, -_moveY, smoothSway.x   ), -limitPos.y, limitPos.y), originPos.z);
         }
         else
         {

@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody myRigid;
     private GunController gunController;
     private Crosshair crosshair;
+    private StatusController statusController;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         applyCrouchPosY = originPosY;
         gunController = FindObjectOfType<GunController>();//GunController 탐색
         crosshair= FindObjectOfType<Crosshair>();
+        statusController = FindObjectOfType<StatusController>();
         
     }
 
@@ -170,6 +172,7 @@ public class PlayerController : MonoBehaviour
         isRun = true;
         applySpeed = runSpeed;
         crosshair.RunningAnimation(isRun);
+        statusController.DecreaseStamina(10);
     }
 
     private void RunningCancle()
@@ -192,6 +195,7 @@ public class PlayerController : MonoBehaviour
             Crouch();//점프할 때 앉아있으면 자동으로 앉은 상태를 해제한다.
         }
         myRigid.velocity = transform.up * jumpForce;
+        statusController.DecreaseStamina(100);
     }
     private void IsGround()
     {
