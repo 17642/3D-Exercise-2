@@ -15,11 +15,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
     private Text text_Count;
     [SerializeField]
     private GameObject go_CountImage;
-    private WeaponManager weaponManager;
+    //private WeaponManager weaponManager;
+    private ItemEffectDatabase database;
     // Start is called before the first frame update
     private void Start()
     {
-        weaponManager = FindObjectOfType<WeaponManager>();//프리팹의 경우 SerializeField를 사용하면 여러개에 일일히 지정해야 할 수 있음.
+        database = FindObjectOfType<ItemEffectDatabase>();
+      //  weaponManager = FindObjectOfType<WeaponManager>();//프리팹의 경우 SerializeField를 사용하면 여러개에 일일히 지정해야 할 수 있음.
     }
     public  void AddItem(Item _item, int _count = 1)//개수 기본값 1
     {
@@ -51,14 +53,22 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         {
             if (item != null)
             {
+                /*Weapon Manager를 아이템 데이터베이스로 이동
                 if(item.itemType == Item.ItemType.Equipment)//아이템의 타입이 장비인 경우
                 {//장착
-                    StartCoroutine(weaponManager.ChangeWeaponCoroutine(item.weaponType, item.itemName));
+                    //StartCoroutine(weaponManager.ChangeWeaponCoroutine(item.weaponType, item.itemName));
                     //"GUN", subMachineGun
                 }
                 else
                 {//소모
+                    database.UseItem(item);//소모품 사용
                     Debug.Log(item.itemName + " 을 사용함");
+                    SetSlotCount(-1);//물건 수량 감소
+                }
+                */
+                database.UseItem(item);//물품 사용
+                if (item.itemType == Item.ItemType.Used)
+                {//아이템이 장비가 아닐 때
                     SetSlotCount(-1);//물건 수량 감소
                 }
             }
