@@ -42,7 +42,8 @@ public class GunController : MonoBehaviour
         if (isActivate)
         {
             GunFirerateCalculate();
-            TryFire();
+            if (!Inventory.inventoryActivated)
+                TryFire();
             TryReload();
             TryFineSIght();
         }
