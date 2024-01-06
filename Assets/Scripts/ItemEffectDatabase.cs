@@ -20,8 +20,21 @@ public class ItemEffectDatabase : MonoBehaviour
     private WeaponManager weaponManager;
     [SerializeField]
     private StatusController statusController;
+    [SerializeField]
+    private SlotToolTip slotToolTip;
 
     private const string HP = "HP", SP = "SP", DP = "DP", HUNGRY = "HUNGRY", THIRSTY = "THIRSTY", SATISFY = "SATISFY";
+
+    public void ShowToolTIp(Item _item, Vector3 _pos)
+    {
+        slotToolTip.ShowToolTip(_item,_pos);
+    }
+
+    public void HideToolTIp()
+    {
+        slotToolTip.HideToolTIp();
+    }
+    
     public void UseItem(Item _item)
     {
         if (_item.itemType == Item.ItemType.Used)

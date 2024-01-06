@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IDropHandler, IEndDragHandler
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler ,IPointerClickHandler, IBeginDragHandler, IDragHandler, IDropHandler, IEndDragHandler
 {
     public Item item;//아이템
     public int itemCount;//아이템 수
@@ -156,6 +156,19 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         else//빈 슬롯인 경우
         {
             DragSlot.instance.dragSlot.ClearSlot();//DragSlot 초기화
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        database.HideToolTIp();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)//slot에 커서가 들어가면
+    {
+        if (item != null)
+        {
+            database.ShowToolTIp(item,transform.position);
         }
     }
 }
