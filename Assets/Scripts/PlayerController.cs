@@ -152,11 +152,11 @@ public class PlayerController : MonoBehaviour
 
     private void TryRun()
     {
-        if (Input.GetKey(KeyCode.LeftShift))//Shift가 눌려 있을 때
+        if (Input.GetKey(KeyCode.LeftShift)&&statusController.GetCurrentSP()>0)//Shift가 눌려 있을 때
         {
             Running();
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift))//Shift를 떼었을 때
+        if (Input.GetKeyUp(KeyCode.LeftShift)||statusController.GetCurrentSP()<=0)//Shift를 떼었을 때
         {
             RunningCancle();
         }
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
     }
     private void TryJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space)&&isGround)
+        if(Input.GetKeyDown(KeyCode.Space)&&isGround&&statusController.GetCurrentSP()>0)
         {
             Jump();
         }
