@@ -131,13 +131,13 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler ,IP
         {
             ChangeSlot();
         }
-        Debug.Log("ONDROP 호출");
+        Debug.Log(gameObject.name +" ONDROP 호출");
            
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("ONENDDRAG 호출");
+        Debug.Log(gameObject.name + " ONENDDRAG 호출");
         DragSlot.instance.dragSlot = null;
         DragSlot.instance.SetColor(0);
     }
