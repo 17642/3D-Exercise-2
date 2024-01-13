@@ -68,7 +68,7 @@ public class CraftMenuUI : MonoBehaviour
 
     private void Build()
     {
-        if (isPreviewActivated)
+        if (isPreviewActivated&&go_Preview.GetComponent<PreviewObject>().isBuildable())
         {
             Instantiate(go_Prefab, hitInfo.point, Quaternion.identity);
             Destroy(go_Preview);
