@@ -4,7 +4,10 @@ using UnityEngine;
 
 public abstract class CloseWeaponController : MonoBehaviour//추상 클래스(직접 이 클래스를 붙일 수 없음) -> 컴포넌트가 될 수 없음 -> Update를 실행할 수 없음. 
 {
-    
+
+    [SerializeField]
+    protected LayerMask layermask;
+
     //현재 장착 Hand 타입 무기
     [SerializeField]
     CloseWeapon currentCloseWeapon;
@@ -52,7 +55,7 @@ public abstract class CloseWeaponController : MonoBehaviour//추상 클래스(직접 이
 
     protected bool CheckObject()//언제나 True
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, currentCloseWeapon.range))//range 안에 Ray가 닿았을 경우 hitInfo에 저장
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, currentCloseWeapon.range,layermask))//range 안에 Ray가 닿았을 경우 hitInfo에 저장
         {
             return true;
         }

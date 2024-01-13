@@ -8318,10 +8318,10 @@ GameObject:
   - component: {fileID: 761206403}
   - component: {fileID: 761206408}
   - component: {fileID: 761206404}
+  - component: {fileID: 761206409}
   - component: {fileID: 761206405}
   - component: {fileID: 761206406}
   - component: {fileID: 761206407}
-  - component: {fileID: 761206409}
   m_Layer: 2
   m_Name: Holder
   m_TagString: Untagged
@@ -8360,6 +8360,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e6800f43ae00f4aba530272248b77b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layermask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   currentCloseWeapon: {fileID: 1618803680}
 --- !u!114 &761206404
 MonoBehaviour:
@@ -8373,6 +8376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7109a1265e0f999469be7c728e16d4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layermask:
+    serializedVersion: 2
+    m_Bits: 243
   currentGun: {fileID: 622778320}
   OriginPos: {x: 0, y: 0, z: 0}
   cam: {fileID: 963194227}
@@ -8528,6 +8534,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8e481268e51e140a9a4b2c6a79aefa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layermask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   currentCloseWeapon: {fileID: 1863443839}
 --- !u!114 &761206409
 MonoBehaviour:
@@ -8541,6 +8550,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43374e8c9ea8f2841bf93ee1fdc42af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layermask:
+    serializedVersion: 2
+    m_Bits: 243
   currentCloseWeapon: {fileID: 908295241}
 --- !u!224 &779847140 stripped
 RectTransform:

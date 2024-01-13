@@ -5,7 +5,8 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     public static bool isActivate = true;//활성화 여부
-
+    [SerializeField]
+    private LayerMask layermask;
     [SerializeField]
     private Gun currentGun;
     [SerializeField]
@@ -84,7 +85,7 @@ public class GunController : MonoBehaviour
 
     private void Hit()
     {
-        if(Physics.Raycast(cam.transform.position,cam.transform.forward+new Vector3(Random.Range(-crosshair.GetAccuracy()-currentGun.accuracy,+crosshair.GetAccuracy()+currentGun.accuracy), Random.Range(-crosshair.GetAccuracy() - currentGun.accuracy, +crosshair.GetAccuracy() + currentGun.accuracy),0),out hitinfo, currentGun.range))
+        if(Physics.Raycast(cam.transform.position,cam.transform.forward+new Vector3(Random.Range(-crosshair.GetAccuracy()-currentGun.accuracy,+crosshair.GetAccuracy()+currentGun.accuracy), Random.Range(-crosshair.GetAccuracy() - currentGun.accuracy, +crosshair.GetAccuracy() + currentGun.accuracy),0),out hitinfo, currentGun.range,layermask))
         {
             GameObject clone = Instantiate(hit_effect_prefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
             Destroy(clone, 2f);
