@@ -6,8 +6,8 @@ public class WeakAnimal : Animal
 {
     public void Run(Vector3 _targetPos)
     {
-        applySpeed = runSpeed;
-        direction = Quaternion.LookRotation(transform.position - _targetPos).eulerAngles;//반대 방향 Direction 설정
+        nav.speed = runSpeed;
+        destination = new Vector3(transform.position.x - _targetPos.x, 0f, transform.position.z - _targetPos.z).normalized;//반대 방향 Direction 설정
         currentTime = runTime;
         isWalking = false;
         isRunning = true;
