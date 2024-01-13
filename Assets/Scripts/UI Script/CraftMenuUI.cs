@@ -120,12 +120,14 @@ public class CraftMenuUI : MonoBehaviour
     
     private void OpenWindow()
     {
+        GameManager.isOpenCraftMenu= true;
         isActivated = true;
         go_BaseUI.SetActive(true);
     }
 
     private void CloseWindow()
     {
+        GameManager.isOpenCraftMenu = false;
         isActivated = false;
         go_BaseUI.SetActive(false);
     }
