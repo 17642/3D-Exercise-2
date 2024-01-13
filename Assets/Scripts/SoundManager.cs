@@ -54,17 +54,18 @@ public class SoundManager : MonoBehaviour
                     if (!audioSourceEffects[j].isPlaying)
                     {
                         playSoundName[j] = effectSounds[i].name;//이름 지정
-                        audioSourceEffects[i].clip = effectSounds[j].clip;
-                        audioSourceEffects[i].Play();
+                        audioSourceEffects[j].clip = effectSounds[i].clip;
+                        audioSourceEffects[j].Play();
                         return;
                     }
                 }
                 Debug.Log("모든 AUDIOSOURCE 사용중");
                 return;
             }
-            Debug.Log(_name + " 사운드가 등록되지 않았습니다.");
+            
         }
-        
+        Debug.Log(_name + " 사운드가 등록되지 않았습니다.");
+
     }
 
     public void StopAllSE()
