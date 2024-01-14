@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class GunController : MonoBehaviour
@@ -43,7 +44,7 @@ public class GunController : MonoBehaviour
         if (isActivate)
         {
             GunFirerateCalculate();
-            if (!Inventory.inventoryActivated)
+            if (!Inventory.inventoryActivated&&GameManager.canPlayerMove)
             {
                 TryFire();
                 TryReload();
@@ -89,7 +90,13 @@ public class GunController : MonoBehaviour
         {
             GameObject clone = Instantiate(hit_effect_prefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
             Destroy(clone, 2f);
+            if (hitinfo.transform.tag == "WeakAnimal")
+            {
+                SoundManager.instance.PlaySE("Animal_Hit");
+                hitinfo.transform.GetComponent<WeakAnimal>().Damage(1, transform.position);//임시로 설정
+            }
         }
+        
     }
 
     void Shoot()//발사 후

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public static bool isWater = false;
 
+    public static bool isPause = false;//메뉴 호출
+
     private bool flag = false;//물속에 있었는지 플래그
 
     private WeaponManager wm;
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isOpenInventory||isOpenCraftMenu)
+        if (isOpenInventory||isOpenCraftMenu||isPause)
         {
             canPlayerMove = false;
             Cursor.lockState = CursorLockMode.None;
