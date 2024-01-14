@@ -78,4 +78,21 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    public Slot[] GetSlots()//자신의 슬롯들을 세이브를 위해 리턴
+    {
+        return slots;
+    }
+    [SerializeField]
+    private Item[] items;
+    public void LoadToInven(int _arrayNum, string _name, int _itemNum) {
+        for(int i=0;i<items.Length; i++)
+        {
+            if (items[i].itemName == _name)
+            {
+                slots[_arrayNum].AddItem(items[i], _itemNum);//아이템을 슬롯에 저장
+            }
+        }
+    
+    }
 }

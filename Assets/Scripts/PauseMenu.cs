@@ -6,7 +6,13 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
     private GameObject go_baseUI;
+    [SerializeField]
+    private SaveNLoad saves;
 
+    private void Awake()
+    {
+        saves = FindObjectOfType<SaveNLoad>();
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -39,15 +45,18 @@ public class PauseMenu : MonoBehaviour
     public void ClickSave()
     {
         Debug.Log("세이브");
+        saves.SaveData();
     }
 
     public void ClickLoad()
     {
         Debug.Log("로드");
+        saves.LoadData();
     }
 
     public void ClickExit()
     {
         Debug.Log("나가기");
+        Application.Quit();
     }
 }
