@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Water : MonoBehaviour
 {
@@ -37,14 +38,32 @@ public class Water : MonoBehaviour
     [SerializeField]
     private float breatheTime;
     private float currentBreathTime;
+
+    [SerializeField]
+    private float totalOxygen;//산소 ㅇ양
+    private float currentOxygen;
+
+    [SerializeField]
+    private GameObject go_baseUI;
+    [SerializeField]
+    private Text text_totalOxygen;
+    [SerializeField]//UI 요소
+    private Text text_currentOxygen;
+    [SerializeField]
+    private Image gauge;
+
+    private StatusController sc;
+    private float temp;
     // Start is called before the first frame update
     void Start()
     {
         originColor = RenderSettings.fogColor;
         originFogDensity = RenderSettings.fogDensity;
 
-
+        sc = FindObjectOfType<StatusController>();
+        currentOxygen = totalOxygen;
         originDrag = 0;
+        text_totalOxygen.text = totalOxygen.ToString();
     }
 
     // Update is called once per frame
@@ -60,6 +79,8 @@ public class Water : MonoBehaviour
                 currentBreathTime = 0;
             }
         }
+
+        DecreaseOxygen();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,7 +103,10 @@ public class Water : MonoBehaviour
 
     private void GetInWater(Collider _player)
     {
+       // Debug.Log("Get IN Water");
         GameManager.isWater = true;
+
+        go_baseUI.SetActive(true);
         _player.transform.GetComponent<Rigidbody>().drag = waterDrag;
         if (!GameManager.isNight)
         {
@@ -98,6 +122,7 @@ public class Water : MonoBehaviour
 
     private void GetOutWater(Collider _player)
     {
+        go_baseUI.SetActive(false);
         GameManager.isWater = false;
         _player.transform.GetComponent<Rigidbody>().drag = originDrag;
 
@@ -110,6 +135,29 @@ public class Water : MonoBehaviour
         {
             RenderSettings.fogDensity = originNightFogDensity;
             RenderSettings.fogColor = originNightColor;
+        }
+
+        currentOxygen = totalOxygen;
+    }
+
+    private void DecreaseOxygen()
+    {
+        if (GameManager.isWater)
+        {
+            currentOxygen -= Time.deltaTime;
+            text_currentOxygen.text = Mathf.Round(currentOxygen).ToString();
+            gauge.fillAmount = currentOxygen / totalOxygen;
+
+            if (currentOxygen <= 0)
+            {
+                temp += Time.deltaTime;
+                if (temp >= 1)
+                {
+                    sc.DecreaseHP(1);
+                    temp = 0;//1초마다 체력 감소
+                }
+                
+            }
         }
     }
 }

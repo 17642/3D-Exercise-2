@@ -142,4 +142,21 @@ public class WeaponManager : MonoBehaviour
             pickaxeController.CloseWeaponChange(pickaxeDictionary[_name]);
         }
     }
+
+    public IEnumerator WeaponInCoroutine()//公扁 持绰 内风凭
+    {
+        Debug.Log("Weapon IN2");
+        isChangeWeapon = true;
+        currentWeaponAnimator.SetTrigger("WeaponOut");
+
+        yield return new WaitForSeconds(changeWeaponDelayTime);
+        currentWeapon.gameObject.SetActive(false);
+    }
+
+    public void WeaponOut()//公扁 持绰 内风凭
+    {
+        isChangeWeapon = false;
+       
+        currentWeapon.gameObject.SetActive(true);
+    }
 }

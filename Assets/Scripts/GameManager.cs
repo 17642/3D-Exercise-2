@@ -14,11 +14,17 @@ public class GameManager : MonoBehaviour
     public static bool isNight = false;
 
     public static bool isWater = false;
+
+    private bool flag = false;//물속에 있었는지 플래그
+
+    private WeaponManager wm;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;//자연스럽게 보이지 않음
         Cursor.visible = false;
+
+        wm = FindObjectOfType<WeaponManager>();
     }
 
     // Update is called once per frame
@@ -35,6 +41,26 @@ public class GameManager : MonoBehaviour
             canPlayerMove = true;
             Cursor.lockState = CursorLockMode.Locked;//자연스럽게 보이지 않음
             Cursor.visible = false;
+        }
+        Debug.Log(isWater);
+        if (isWater)
+        {
+            Debug.Log(flag + "WATER_IN");
+            if (!flag)
+            {
+                Debug.Log("Weapon IN1");
+                StopAllCoroutines();//코루틴 정리 및 한번만 실행되게 플래그 설정
+                StartCoroutine(wm.WeaponInCoroutine());
+                flag = true;
+            }
+        }
+        else
+        {
+            if (flag)
+            {
+                wm.WeaponOut();
+                flag = false;
+            }
         }
     }
 }

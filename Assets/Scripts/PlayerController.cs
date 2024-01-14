@@ -12,6 +12,12 @@ public class PlayerController : MonoBehaviour
     private float applySpeed;
     [SerializeField]
     private float crouchSpeed;
+    [SerializeField]
+    private float swimSpeed;
+    [SerializeField]
+    private float swimFastSpeed;
+    [SerializeField]
+    private float upSwimSpeed;
 
     [SerializeField]
     private float jumpForce;
@@ -69,9 +75,13 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.canPlayerMove)
         {
+            WaterCheck();
             IsGround();
             TryJump();
-            TryRun();
+            if (!GameManager.isWater)
+            {
+                TryRun();
+            }
             TryCrouch();
             Move();
             MoveCheck2();
@@ -83,6 +93,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void WaterCheck()
+    {
+
+        if (GameManager.isWater)
+        {
+            applySpeed = swimSpeed;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                applySpeed = swimFastSpeed;
+            }
+
+        }
+    }
     private void CameraRotation()
     {
         //카메라는 상하로 움직인다(Mouse Y)
@@ -189,10 +212,18 @@ public class PlayerController : MonoBehaviour
     }
     private void TryJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space)&&isGround&&statusController.GetCurrentSP()>0)
+        if(Input.GetKeyDown(KeyCode.Space)&&isGround&&statusController.GetCurrentSP()>0&&!GameManager.isWater)
         {
             Jump();
+        }else if (Input.GetKey(KeyCode.Space) && GameManager.isWater)
+        {
+            UpSwim();
         }
+    }
+
+    private void UpSwim()
+    {
+        myRigid.velocity = transform.up * upSwimSpeed;
     }
     private void Jump()
     {
