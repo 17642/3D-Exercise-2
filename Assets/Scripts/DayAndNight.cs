@@ -15,8 +15,6 @@ public class DayAndNight : MonoBehaviour
     [SerializeField]
     private float dayFogDensity;
     private float currentFogDensity;//계산
-
-    private bool isNight = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,13 +27,13 @@ public class DayAndNight : MonoBehaviour
         transform.Rotate(Vector3.right, 0.1f * secondPerRealTimeSecond * Time.deltaTime);
         if (transform.eulerAngles.x >= 170)
         {
-            isNight = true;//해의 각도가 일정 이상이면 night 활성화
+            GameManager.isNight = true;//해의 각도가 일정 이상이면 night 활성화
         }else if(transform.eulerAngles.x <= 340.0f)
         {
-            isNight = false;
+            GameManager.isNight = false;
         }
 
-        if (isNight)
+        if (GameManager.isNight)
         {
             if (currentFogDensity <= nightFogDensity)
             {
